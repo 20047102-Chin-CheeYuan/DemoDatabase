@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,13 +35,20 @@ public class MainActivity extends AppCompatActivity {
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create the DBHelper object, passing in the
-                // activity's Context
-                DBHelper db = new DBHelper(MainActivity.this);
 
-                // Insert a task
-                db.insertTask(etDesc.getText().toString(), etDate.getText().toString());
+                if (etDesc.getText().toString().trim().length() != 0 && etDate.getText().toString().trim().length() != 0) {
+                    // Create the DBHelper object, passing in the
+                    // activity's Context
+                    DBHelper db = new DBHelper(MainActivity.this);
 
+                    // Insert a task
+                    db.insertTask(etDesc.getText().toString(), etDate.getText().toString());
+                    String text = String.format("Task: %s\nDate: %s \nSuccessfully added!!",etDesc.getText().toString(), etDate.getText().toString());
+                    Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+                } else {
+                    String text = ("Description or Date cannot be empty!");
+                    Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
