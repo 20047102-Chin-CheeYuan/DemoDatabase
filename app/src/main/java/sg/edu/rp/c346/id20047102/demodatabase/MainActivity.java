@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Task> aa;
     ArrayList<Task> alTask;
 
+    boolean asc = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
+                alTask = db.getTasks(asc);
                 db.close();
-
-
-                alTask = db.getTasks();
+                asc = !asc;
                 aa = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, alTask);
                 lvResults.setAdapter(aa);
             }
